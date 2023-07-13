@@ -1,7 +1,7 @@
 package demo.books.Controller;
 
 import demo.books.Application.UserApplication;
-import demo.books.models.User;
+import demo.books.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +25,6 @@ public class UserController {
     @GetMapping(value = "/")
     public void getPatient()
     {
-        userApplicationApplication.get();
+         userApplicationApplication.get();
     }
 }

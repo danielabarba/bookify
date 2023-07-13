@@ -1,12 +1,14 @@
 package demo.books.Controller;
 
-import demo.books.models.Book;
+import demo.books.Entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import demo.books.Application.BookApplication;
 
+import java.util.List;
+
 @RestController
-@RequestMapping(value = "/book")
+@RequestMapping(value = "/books")
 
 public class BookController {
 
@@ -25,8 +27,19 @@ public class BookController {
     }
 
     @GetMapping(value = "/")
-    public void getPatient()
+    public List<Book> getPatient()
     {
-        bookApplication.getBook();
+        return bookApplication.getBook();
+    }
+
+    @GetMapping(value = "/{id}")
+    public String getById(@PathVariable Integer id)
+    {
+        return bookApplication.getById(id);
+    }
+    @DeleteMapping(value = "/{id}")
+    public String deleteById(@PathVariable Integer id)
+    {
+        return bookApplication.deleteById(id);
     }
 }
