@@ -15,18 +15,18 @@ public class BookController {
     @Autowired
     private BookApplication bookApplication;
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "")
     public String create(@RequestBody Book newBook)
     {
       return bookApplication.addBook(newBook);
     }
-    @PutMapping(value = "/")
+    @PutMapping(value = "")
     public String update(@RequestBody Book newBook)
     {
         return bookApplication.updateBook(newBook);
     }
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "")
     public List<Book> getPatient()
     {
         return bookApplication.getBook();

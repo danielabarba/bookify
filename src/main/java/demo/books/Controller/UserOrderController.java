@@ -13,19 +13,19 @@ public class UserOrderController {
     @Autowired
     private UserOrderApplication userOrderApplication;
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "")
     public String create(@RequestBody UserOrder newUserOrder)
     {
         return userOrderApplication.add(newUserOrder);
     }
-    @PutMapping(value = "/")
+    @PutMapping(value = "")
     public String update(@RequestBody UserOrder newUserOrder)
     {
         return userOrderApplication.update(newUserOrder);
     }
 
-    @GetMapping(value = "/")
-    public List<UserOrder> getPatient()
+    @GetMapping(value = "")
+    public List<UserOrder> getOrder()
     {
         return userOrderApplication.get();
     }

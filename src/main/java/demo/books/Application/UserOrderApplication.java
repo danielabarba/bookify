@@ -26,9 +26,9 @@ public class UserOrderApplication {
 
     public String add(UserOrder userOrder){
         try {
-            Optional<User> byIdUser = userRepository.findById(userOrder.getUser().getId());
-            System.out.println(byIdUser);
-            Assert.state(!byIdUser.isEmpty(), "Not valid user");
+       //     Optional<User> byIdUser = userRepository.findById(userOrder.getUser().getId());
+          //  System.out.println(byIdUser);
+            //Assert.state(!byIdUser.isEmpty(), "Not valid user");
             userOrderRepository.save(userOrder);
             return "Correct record";
         }
@@ -50,8 +50,8 @@ public class UserOrderApplication {
         try {
             Assert.state(userOrder.getId() != null, "You have to set the ID");
 
-            Optional<UserOrder> byIdUser = userOrderRepository.findById(userOrder.getId());
-            Assert.state(byIdUser.isPresent(), "Not valid user Order");
+       //     Optional<UserOrder> byIdUser = userOrderRepository.findById(userOrder.getId());
+         //   Assert.state(byIdUser.isPresent(), "Not valid user Order");
             userOrderRepository.save(userOrder);
             return "Done";
         }

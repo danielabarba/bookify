@@ -6,24 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/author")
+@RequestMapping(value = "/authors")
 
 public class AuthorController {
     @Autowired
     private AuthorApplication authorApplication;
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "")
     public String create(@RequestBody Author newAuthor)
     {
         return authorApplication.addAuthor(newAuthor);
     }
-    @PutMapping(value = "/")
+    @PutMapping(value = "")
     public String update(@RequestBody Author author)
     {
         return authorApplication.updateAuthor(author);
     }
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "")
     public void get()
     {
         authorApplication.getAuthor();
