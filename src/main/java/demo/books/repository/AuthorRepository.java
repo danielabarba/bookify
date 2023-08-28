@@ -1,6 +1,6 @@
-package demo.books.Repository;
+package demo.books.repository;
 
-import demo.books.Entity.Author;
+import demo.books.entity.Author;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

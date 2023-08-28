@@ -1,7 +1,7 @@
-package demo.books.Controller;
+package demo.books.controller;
 
-import demo.books.Application.UserApplication;
-import demo.books.Entity.User;
+import demo.books.service.UserApplication;
+import demo.books.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

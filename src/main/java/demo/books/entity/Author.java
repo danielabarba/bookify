@@ -1,6 +1,4 @@
-package demo.books.Entity;
-
-import lombok.Data;
+package demo.books.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

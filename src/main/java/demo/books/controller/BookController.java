@@ -1,9 +1,9 @@
-package demo.books.Controller;
+package demo.books.controller;
 
-import demo.books.Entity.Book;
+import demo.books.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import demo.books.Application.BookApplication;
+import demo.books.service.BookApplication;
 
 import java.util.List;
 
