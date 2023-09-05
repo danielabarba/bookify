@@ -1,6 +1,6 @@
 package demo.books.controller;
 
-import demo.books.service.AuthorApplication;
+import demo.books.service.AuthorService;
 import demo.books.entity.Author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 public class AuthorController {
     @Autowired
-    private AuthorApplication authorApplication;
+    private AuthorService authorApplication;
 
     @PostMapping(value = "")
     public String create(@RequestBody Author newAuthor)
@@ -24,9 +24,9 @@ public class AuthorController {
     }
 
     @GetMapping(value = "")
-    public void get()
+    public String get()
     {
-        authorApplication.getAuthor();
+        return authorApplication.getAuthor();
     }
 
     @GetMapping(value = "/{id}")

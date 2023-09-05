@@ -69,7 +69,7 @@ public class UserOrder {
         this.total = total;
     }
 
-    public void setDate(LocalDate bornDate) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

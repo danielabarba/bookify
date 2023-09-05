@@ -1,6 +1,6 @@
 package demo.books.controller;
 
-import demo.books.service.UserOrderApplication;
+import demo.books.service.UserOrderService;
 import demo.books.entity.UserOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping(value = "/orders")
 public class UserOrderController {
     @Autowired
-    private UserOrderApplication userOrderApplication;
+    private UserOrderService userOrderApplication;
 
     @PostMapping(value = "")
     public String create(@RequestBody UserOrder newUserOrder)

@@ -11,25 +11,24 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Component
-public class UserOrderApplication {
+public class UserOrderService {
     @Autowired
     private UserOrderRepository userOrderRepository;
     @Autowired
     private UserRepository userRepository;
-    public UserOrderApplication() {
+    public UserOrderService() {
 
     }
     static final String CORRECT_RECORD = "Correct record";
     static final String INCORRECT_RECORD = "Incorrect record";
     static final String MISS_ID = "You have to set the ID";
+    static final String INVALID_USER = "You have to set the ID";
     public String add(UserOrder userOrder){
         String response;
         try {
-       //     Optional<User> byIdUser = userRepository.findById(userOrder.getUser().getId());
-          //  System.out.println(byIdUser);
-            //Assert.state(!byIdUser.isEmpty(), "Not valid user");
+
             userOrderRepository.save(userOrder);
-            response = "{\"response\": \"" + CORRECT_RECORD + "\"}";
+            response = "{\"response\": \"" + CORRECT_RECORD +  " " + userOrder.getDate() + "\"}";
             return response;
 
         }

@@ -52,13 +52,8 @@ public class Author {
     @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER , cascade={CascadeType.REMOVE,CascadeType.PERSIST})
-    private List<Book> books;
 
-    public Author() {
 
-        books = Collections.emptyList();
-    }
 
 
     public void setId(Integer id) {
@@ -80,9 +75,6 @@ public class Author {
     public  LocalDate getBornDate(){
         return bornDate;
     }
-    public   List<Book> getBooks(){
-        return books;
-    }
     public String getNationality() {return nationality;}
     public String getBiography() {return biography;}
     public String getUrl() {return url;}
@@ -98,9 +90,7 @@ public class Author {
     public void setBornDate(LocalDate bornDate) {
         this.bornDate = bornDate;
     }
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
+
     public  void setNationality(String nationality){
         this.nationality = nationality;
     }

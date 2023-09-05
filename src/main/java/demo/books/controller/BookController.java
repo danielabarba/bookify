@@ -3,7 +3,7 @@ package demo.books.controller;
 import demo.books.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import demo.books.service.BookApplication;
+import demo.books.service.BookService;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class BookController {
 
     @Autowired
-    private BookApplication bookApplication;
+    private BookService bookApplication;
 
     @PostMapping(value = "")
     public String create(@RequestBody Book newBook)
@@ -27,7 +27,7 @@ public class BookController {
     }
 
     @GetMapping(value = "")
-    public List<Book> getPatient()
+    public String getPatient()
     {
         return bookApplication.getBook();
     }

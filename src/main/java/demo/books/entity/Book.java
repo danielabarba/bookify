@@ -1,14 +1,10 @@
 package demo.books.entity;
-
 import lombok.Data;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-
-
 import static javax.persistence.GenerationType.IDENTITY;
 
 
@@ -26,9 +22,6 @@ public class Book {
             = "About Me must be between 3 and 100 characters")
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER , cascade={CascadeType.REMOVE,CascadeType.PERSIST})
-    @JoinColumn(name = "author_id")
-    private Author author;
     private LocalDate publicationDate;
 
     //@Column(message = "Price is mandatory")
@@ -44,10 +37,9 @@ public class Book {
     private Number isbn;
 
 
-    public Book(Integer id, Author author, String name, LocalDate publicationDate, Double price, Number isbn, Integer stock) {
+    public Book(Integer id, String name, LocalDate publicationDate, Double price, Number isbn, Integer stock) {
 
         this.id = id;
-        this.author = author;
         this.name = name;
         this.publicationDate = publicationDate;
         this. price = price;
@@ -70,9 +62,6 @@ public class Book {
     }
 
 
-    public  Author getAuthor(){
-        return author;
-    }
     public  String getName(){
         return name;
     }
@@ -93,9 +82,7 @@ public class Book {
     public  void setName(String name){
         this.name = name;
     }
-    public  void setAuthor(Author author){
-        this.author = author;
-    }
+
     public void setPublicationDate(LocalDate publicationDate) {
         this.publicationDate = publicationDate;
     }

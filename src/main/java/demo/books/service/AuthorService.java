@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class AuthorApplication {
+public class AuthorService {
     //cambiar a service
     @Autowired
     private AuthorRepository authorRepository;
@@ -24,11 +24,12 @@ public class AuthorApplication {
     static final String OLDER_AUTHOR = "The author must be 18 years or older";
     static final String AUTHOR_NAME = "The author name only have to have letters";
     static final String EMAIL = "The author Email have to be valid";
+    static final String INVALID = "Invalid information";
     static final String INVALID_URL = "Invalid URL";
     static final String NOT_FOUND = "Not found";
     static final String NOT_ID = "You have to set the ID";
     static final String NOT_VALID_AUTHOR = "Not valid author";
-    public AuthorApplication() {
+    public AuthorService() {
 
     }
 
@@ -36,23 +37,43 @@ public class AuthorApplication {
         String response;
 
         try {
+            if (author.getBornDate() == null){
+                response = "{\"response\": \"Required born date \"}";
+                return response;
+            }
             LocalDate today
                     = LocalDate.now();
             Period period = Period.between(author.getBornDate(), today);
 
+            if (author.getBornDate() == null){
+                response = "{\"response\": \"Required name \"}";
+                return response;
+            }
             if(period.getYears() < 18){
                 response = "{\"response\": \"" + OLDER_AUTHOR + "\"}";
 
                 return response;
             }
 
-
+            if (author.getName() == null){
+                response = "{\"response\": \"Required name \"}";
+                return response;
+            }
+            else {
             boolean allLetters = author.getName().chars().allMatch(Character::isLetter);
             if(!allLetters){
                 response = "{\"response\": \"" + AUTHOR_NAME + "\"}";
 
                 return response;
             }
+            }
+
+
+            if (author.getEmail() == null){
+                response = "{\"response\": \"Required email \"}";
+                return response;
+            }
+            else {
 
             Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
             Matcher mat = pattern.matcher(author.getEmail());
@@ -60,16 +81,25 @@ public class AuthorApplication {
                 response = "{\"response\": \"" + EMAIL + "\"}";
                 return response;
             }
-
+            }
 
             try {
                 URL url = new URL(author.getUrl());
                 url.toURI();
+            }
+            catch (Exception e){
+                response = "{\"response\": \"" + e.toString() + "\"}";
+                return response;
+            }
+
+
+            try {
+
                 authorRepository.save(author);
-                response = "{\"response\": \"" + CORRECT_RECORD + "\"}";
+                response = "{\"response\": \"" + CORRECT_RECORD + " " + author.getName() + " " + author.getLastName()+ "\"}";
                 return response;
             } catch (Exception e) {
-                response = "{\"response\": \"" + INVALID_URL + "\"}";
+                response = "{\"response\": \"" + INVALID + "\"}";
                 return response;
             }
 
@@ -83,23 +113,31 @@ public class AuthorApplication {
     }
     public String getAuthor(){
         Iterable<Author> allAuthors = authorRepository.findAll();
+        String response;
+        response = "[ \n" ;
 
+        for (final Author oneAuthor : allAuthors) {
 
-        for (final Author one : allAuthors) {
-            System.out.println(one.getName());
+            response = response  + "{\n\"id\": \"" + oneAuthor.getId() + "\",\n";
+            response = response  + "\"name\": \"" + oneAuthor.getName() + "\",\n";
+            response = response  + "\"lastName\": \"" + oneAuthor.getLastName() + "\"\n},\n";
         }
-        return null;
+        response = response.substring(0, response.length() - 2);
+
+        response = response + "\n]" ;
+        return response;
     }
 
     public String getAuthorById(Integer id){
         String response;
         try {
             Optional<Author> author = authorRepository.findById(id);
-
-            return author.get().getName();
+            response = "{\"response\": \"" + author.get().getName() + " " + author.get().getLastName() + "\"}";
+            return response;
         }
         catch (Exception e){
             response = "{\"response\": \"" + NOT_FOUND + "\"}";
+
             return response;
         }
     }
@@ -110,7 +148,7 @@ public class AuthorApplication {
         try {
             if (authorRepository.existsById(id)){
                 authorRepository.deleteById(id);
-                response = "{\"response\": \"" + DELETED + "\"}";
+                response = "{\"response\": \" Author " + id + " "  + DELETED + "\"}";
                 return response;
             }
             {
