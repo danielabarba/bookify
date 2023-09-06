@@ -3,8 +3,11 @@ package demo.books.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -23,18 +26,21 @@ public class UserOrder {
     //@JoinColumn(name = "user_id")
     //private User user;
 
-
     private LocalDate date;
+    private   ArrayList<Double> price;
+    private   ArrayList<Integer> book;
 
 
     private Double total;
 
-    public UserOrder(Integer id,   LocalDate date, Double total) {
+    public UserOrder(Integer id,   LocalDate date,    ArrayList<Double> price,    ArrayList<Integer> book, Double total) {
 
         this.id = id;
      //   this.user = user;
         this.date = date;
         this.total = total;
+        this.price = price;
+        this.book = book;
 
 
     }
@@ -50,7 +56,12 @@ public class UserOrder {
     public  Double getTotal(){
         return total;
     }
-
+    public    ArrayList<Double> getPrice(){
+        return price;
+    }
+    public   ArrayList<Integer> getBook(){
+        return book;
+    }
     public  LocalDate getDate(){
         return date;
     }
@@ -71,6 +82,12 @@ public class UserOrder {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+    public void setPrice(  ArrayList<Double> price) {
+        this.price = price;
+    }
+    public void setBook(  ArrayList<Integer> book) {
+        this.book = book;
     }
 
 
