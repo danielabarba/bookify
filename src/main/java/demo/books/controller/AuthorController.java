@@ -5,6 +5,8 @@ import demo.books.entity.Author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/authors")
 
@@ -24,7 +26,7 @@ public class AuthorController {
     }
 
     @GetMapping(value = "")
-    public String get()
+    public List<Author> get()
     {
         return authorApplication.getAuthor();
     }

@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @Component
@@ -25,14 +27,11 @@ public class AuthorService {
     @Autowired
     private BookRepository bookRepository;
     static final String CORRECT_RECORD = "Correct record";
-    static final String INCORRECT_RECORD = "Incorrect record";
-    static final String UPDATED = "Updated";
     static final String DELETED = "Deleted";
     static final String OLDER_AUTHOR = "The author must be 18 years or older";
     static final String AUTHOR_NAME = "The author name only have to have letters";
     static final String EMAIL = "The author Email have to be valid";
     static final String INVALID = "Invalid information";
-    static final String INVALID_URL = "Invalid URL";
     static final String NOT_FOUND = "Not found";
     static final String NOT_ID = "You have to set the ID";
     static final String NOT_VALID_AUTHOR = "Not valid author";
@@ -117,28 +116,9 @@ public class AuthorService {
         }
 
     }
-    public String getAuthor(){
-        String response;
-        try {
-            Iterable<Author> allAuthors = authorRepository.findAll();
-            response = "[ \n" ;
-
-            for (final Author oneAuthor : allAuthors) {
-
-                response = response  + "{\n\"id\": \"" + oneAuthor.getId() + "\",\n";
-                response = response  + "\"name\": \"" + oneAuthor.getName() + "\",\n";
-                response = response  + "\"lastName\": \"" + oneAuthor.getLastName() + "\"\n},\n";
-            }
-            response = response.substring(0, response.length() - 2);
-
-            response = response + "\n]" ;
-            return response;
-        }
-        catch (Exception e){
-            response = "{\"response\": \"" + NOT_FOUND + "\"}";
-            return response;
-        }
-
+    public List<Author> getAuthor(){
+        return   StreamSupport.stream(authorRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
     }
 
     public String getAuthorById(Integer id){

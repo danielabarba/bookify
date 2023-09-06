@@ -27,7 +27,7 @@ public class BookController {
     }
 
     @GetMapping(value = "")
-    public String getPatient()
+    public List<Book> getPatient()
     {
         return bookApplication.getBook();
     }

@@ -27,19 +27,19 @@ public class UserOrder {
     //private User user;
 
     private LocalDate date;
-    private   ArrayList<Double> price;
+
     private   ArrayList<Integer> book;
 
 
     private Double total;
 
-    public UserOrder(Integer id,   LocalDate date,    ArrayList<Double> price,    ArrayList<Integer> book, Double total) {
+    public UserOrder(Integer id,   LocalDate date,      ArrayList<Integer> book, Double total) {
 
         this.id = id;
      //   this.user = user;
         this.date = date;
         this.total = total;
-        this.price = price;
+
         this.book = book;
 
 
@@ -56,9 +56,7 @@ public class UserOrder {
     public  Double getTotal(){
         return total;
     }
-    public    ArrayList<Double> getPrice(){
-        return price;
-    }
+
     public   ArrayList<Integer> getBook(){
         return book;
     }
@@ -83,9 +81,7 @@ public class UserOrder {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-    public void setPrice(  ArrayList<Double> price) {
-        this.price = price;
-    }
+
     public void setBook(  ArrayList<Integer> book) {
         this.book = book;
     }

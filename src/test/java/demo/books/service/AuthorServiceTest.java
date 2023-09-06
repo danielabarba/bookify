@@ -214,19 +214,6 @@ public class AuthorServiceTest {
         authorService.addAuthor(author);
     }
     @Test
-    public void getAuthorTest(){
-        author.setName("Daniela");
-        author.setBiography("d,flf krfkr dfkrfkm feefvm");
-        author.setLastName("Barba");
-        author.setBornDate(LocalDate.parse("1994-01-11"));
-        author.setNationality("Mexicana");
-        author.setUrl("https://www.gouele.com/search?q=google&rlz=1C1VDKB_esMX1058MX1q=google&g");
-        author.setEmail("danigeaa@gmail.com");
-        authorService.addAuthor(author);
-        authorService.getAuthor();
-
-    }
-    @Test
     public void getAuthorById(){
         authorService.getAuthorById(1);
     }

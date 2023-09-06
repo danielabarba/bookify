@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Component
 
@@ -104,34 +106,21 @@ public class BookService {
 
     }
 
-    public String getBook(){
-    String response;
-        try {
-            Iterable<Book> allBooks = bookRepository.findAll();
+    public List<Book> getBook(){
 
-            response = "[ \n" ;
-
-            for (final Book oneBook : allBooks) {
-
-                response = response  + "{\n\"id\": \"" + oneBook.getId() + "\",\n";
-                response = response  + "\"Name\": \"" + oneBook.getName() + "\"\n},\n";
-            }
-            response = response.substring(0, response.length() - 2);
-
-            response = response + "\n]" ;
-            return response;
-        }
-        catch (Exception e){
-            response = "{\"response\": \"" + NOT_FOUND + "\"}";
-            return response;
-        }
-
+      return   StreamSupport.stream(bookRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
 
 
     }
 
     public String updateBook(Book book){
         String response;
+        if(book.getId() ==null){
+            response = "{\"response\": \"" + MISS_ID + "\"}";
+
+            return response;
+        }
 
 
         if(book.getPrice()<0){

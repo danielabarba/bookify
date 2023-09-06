@@ -30,13 +30,14 @@ public class UserOrderService {
     }
     static final String CORRECT_RECORD = "Correct record";
     static final String INCORRECT_RECORD = "Incorrect record";
+    static final String NOT_FOUND = "Not found";
+
     static final String MISS_ID = "You have to set the ID";
-    static final String INVALID_USER = "You have to set the ID";
+    static final String DELETED = "Deleted";
     static final String BOOK = "Set book ID";
     public String add(UserOrder userOrder){
         String response;
         LocalDate today = LocalDate.now();
-        ArrayList<Double> price = new ArrayList<Double>();
         Double total = 0.0;
 
         if (userOrder.getBook()== null){
@@ -53,12 +54,10 @@ public class UserOrderService {
                 }
 
                 total = total + book.get().getPrice();
-                price.set(i, book.get().getPrice());
 
             }
 
             userOrder.setDate(today);
-            userOrder.setPrice(price);
             userOrder.setTotal(total);
 
         }
@@ -88,20 +87,79 @@ public class UserOrderService {
                 .collect(Collectors.toList());
     }
 
+    public String getById(Integer id){
+        String response;
+        try {
+            Optional<UserOrder> userOrder = userOrderRepository.findById(id);
+            response = "{\"response\": \"" + userOrder.get().getDate() +  "\"}";
+            return response;
+        }
+        catch (Exception e){
+            response = "{\"response\": \"" + "Not found" + "\"}";
+            return response;
+        }
+    }
+
     public String update(UserOrder userOrder){
         String response;
+        Double total = 0.0;
+
+        if (userOrder.getId()== null){
+            response = "{\"response\": \"" + MISS_ID + "\"}";
+            return response;
+        }
+        if (userOrder.getBook()== null){
+            response = "{\"response\": \"" + BOOK + "\"}";
+            return response;
+        }
+        try {
+            for (int i=0;i<userOrder.getBook().size();i++) {
+
+                book = bookRepository.findById(userOrder.getBook().get(i));
+                if(book.isEmpty()){
+                    response = "{\"response\": \"Book " + userOrder.getBook().get(i) +  " not found"  + "\"}";
+                    return response;
+                }
+
+                total = total + book.get().getPrice();
+
+            }
+
+
+            userOrder.setTotal(total);
+
+        }
+        catch (Exception e){
+            response = "{\"response\": \"" + BOOK +  " " + userOrder.getId() + "\"}";
+            return response;
+        }
 
         try {
-            if (userOrder.getId() == null){
-                response = "{\"response\": \"" + MISS_ID + "\"}";
+
+            userOrderRepository.save(userOrder);
+            response = "{\"response\": \"" + CORRECT_RECORD +  " " + userOrder.getId()+ "\"}";
+            return response;
+
+        }
+        catch (Exception e){
+            response = "{\"response\": \"" + INCORRECT_RECORD + "\"}";
+            return response;
+        }
+    }
+
+    public String deleteById(Integer id){
+        String response;
+        try {
+            if (userOrderRepository.existsById(id)){
+                userOrderRepository.deleteById(id);
+                response = "{\"response\": \"" + DELETED + " " + id + "\"}";
+                return response;
+            }
+            {
+                response = "{\"response\": \"" + NOT_FOUND + "\"}";
                 return response;
             }
 
-       //     Optional<UserOrder> byIdUser = userOrderRepository.findById(userOrder.getId());
-         //   Assert.state(byIdUser.isPresent(), "Not valid user Order");
-            userOrderRepository.save(userOrder);
-            response = "{\"response\": \"" + CORRECT_RECORD + "\"}";
-            return response;
         }
         catch (Exception e){
             response = "{\"response\": \"" + e.toString() + "\"}";

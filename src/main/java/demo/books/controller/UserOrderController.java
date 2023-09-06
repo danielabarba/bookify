@@ -18,7 +18,7 @@ public class UserOrderController {
     {
         return userOrderApplication.add(newUserOrder);
     }
-    @PutMapping(value = "")
+    @PutMapping(value = "/{id}")
     public String update(@RequestBody UserOrder newUserOrder)
     {
         return userOrderApplication.update(newUserOrder);
@@ -28,5 +28,17 @@ public class UserOrderController {
     public List<UserOrder> getOrder()
     {
         return userOrderApplication.get();
+    }
+
+    @GetMapping(value = "/{id}")
+    public String getOrderId(@PathVariable Integer id)
+    {
+        return userOrderApplication.getById(id);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public String deleteById(@PathVariable Integer id)
+    {
+        return userOrderApplication.deleteById(id);
     }
 }
