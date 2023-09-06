@@ -34,6 +34,12 @@ public class AuthorController {
     {
        return authorApplication.getAuthorById(id);
     }
+
+    @GetMapping(value = "/{id}/books")
+    public String getBooksById(@PathVariable Integer id)
+    {
+        return authorApplication.getAuthorBooks(id);
+    }
     @DeleteMapping(value = "/{id}")
     public String deleteById(@PathVariable Integer id)
     {

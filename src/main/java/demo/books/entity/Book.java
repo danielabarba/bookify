@@ -22,6 +22,8 @@ public class Book {
             = "About Me must be between 3 and 100 characters")
     private String name;
 
+    private Integer authorId;
+
     private LocalDate publicationDate;
 
     //@Column(message = "Price is mandatory")
@@ -37,7 +39,7 @@ public class Book {
     private Number isbn;
 
 
-    public Book(Integer id, String name, LocalDate publicationDate, Double price, Number isbn, Integer stock) {
+    public Book(Integer id, String name, Integer authorId, LocalDate publicationDate, Double price, Number isbn, Integer stock) {
 
         this.id = id;
         this.name = name;
@@ -45,6 +47,7 @@ public class Book {
         this. price = price;
         this.isbn = isbn;
         this.stock = stock;
+        this.authorId = authorId;
 
     }
     public Book() {
@@ -77,6 +80,9 @@ public class Book {
     public  Integer getStock(){
         return stock;
     }
+    public  Integer getAuthorID(){
+        return authorId;
+    }
 
 
     public  void setName(String name){
@@ -94,5 +100,8 @@ public class Book {
     }
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
     }
 }

@@ -1,6 +1,8 @@
 package demo.books.service;
 
 
+import demo.books.entity.Author;
+import demo.books.repository.AuthorRepository;
 import demo.books.repository.BookRepository;
 import demo.books.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ public class BookService {
 
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private AuthorRepository authorRepository;
 
     static final String CORRECT_RECORD = "Correct record";
     static final String INCORRECT_RECORD = "Incorrect record";
@@ -54,7 +58,12 @@ public class BookService {
             return response;
 
         }
+        if(book.getAuthorID() == null)
+        {
+            response = "{\"response\": \"" + AUTHOR + "\"}";
+            return response;
 
+        }
         if(book.getPrice()<0){
             response = "{\"response\": \"" + NEGATIVE_PRICE + "\"}";
 
@@ -66,39 +75,58 @@ public class BookService {
 
             return response;
         }
-
-
-
         try {
-            bookRepository.save(book);
-            response = "{\"response\": \"" + CORRECT_RECORD + " " + book.getName() + "\"}";
-            return response;
+            Optional<Author> author = authorRepository.findById(book.getAuthorID());
+            if (author.isEmpty()){
+                response = "{\"response\": \"Author " + NOT_FOUND + "\"}";
+                return response;
+            }else{
+                try {
+                    bookRepository.save(book);
+                    response = "{\"response\": \"" + CORRECT_RECORD + " " + book.getName() + "\"}";
+                    return response;
+                }
+                catch (Exception e){
+                    response = "{\"response\": \"" + e.toString() + "\"}";
+                    return response;
+                }
+            }
+
+
         }
         catch (Exception e){
-            response = "{\"response\": \"" + e.toString() + "\"}";
+            response = "{\"response\": \"Author " + NOT_FOUND + "\"}";
+
             return response;
         }
+
 
 
     }
 
     public String getBook(){
+    String response;
+        try {
+            Iterable<Book> allBooks = bookRepository.findAll();
 
-        Iterable<Book> allBooks = bookRepository.findAll();
+            response = "[ \n" ;
 
+            for (final Book oneBook : allBooks) {
 
-        String response;
-        response = "[ \n" ;
+                response = response  + "{\n\"id\": \"" + oneBook.getId() + "\",\n";
+                response = response  + "\"Name\": \"" + oneBook.getName() + "\"\n},\n";
+            }
+            response = response.substring(0, response.length() - 2);
 
-        for (final Book oneBook : allBooks) {
-
-            response = response  + "{\n\"id\": \"" + oneBook.getId() + "\",\n";
-            response = response  + "\"Name\": \"" + oneBook.getName() + "\"\n},\n";
+            response = response + "\n]" ;
+            return response;
         }
-        response = response.substring(0, response.length() - 2);
+        catch (Exception e){
+            response = "{\"response\": \"" + NOT_FOUND + "\"}";
+            return response;
+        }
 
-        response = response + "\n]" ;
-        return response;
+
 
     }
 
